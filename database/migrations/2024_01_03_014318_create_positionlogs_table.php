@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('latitude');
             $table->string('longitude');
+            $table->string('device');
             $table->timestamp('loggedAt')->useCurrent();
             $table->timestamps();
         });

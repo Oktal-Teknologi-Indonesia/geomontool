@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/set',[PositionlogController::class,'incominglog']);
 Route::get('/get',[PositionlogController::class,'last10']);
+Route::get('/mytrip/{device}',[PositionlogController::class,'myTrip']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

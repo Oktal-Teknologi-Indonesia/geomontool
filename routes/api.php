@@ -3,6 +3,7 @@
 use App\Http\Controllers\PositionlogController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +17,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/set',[PositionlogController::class,'incominglog']);
-Route::get('/get',[PositionlogController::class,'last10']);
+Route::get('/get',[PositionlogController::class,'last50']);
 Route::get('/mytrip/{device}',[PositionlogController::class,'myTrip']);
+Route::post('/test',function(Request $request){
+    $posted = $request->json()->all();
+    $resp = "Sent from $posted[lat] , $posted[lon] using your $posted[dev]";
+    return $resp . "\n";
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

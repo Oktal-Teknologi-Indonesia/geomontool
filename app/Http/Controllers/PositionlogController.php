@@ -3,24 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\positionlog;
+use App\Models\Postlog;
 use Illuminate\Http\Request;
 
 class PositionlogController extends Controller
 {
     public function incominglog(Request $request){
+    $posted = $request->json()->all();
+    return $posted;
         positionlog::create([
-            'latitude'=>$request->lat,
-            'longitude'=>$request->lon,
-            'device'=>$request->dev
+            'latitude'=>$posted['lat'],
+            'longitude'=>$posted['lon'],
+            'device'=>$posted['dev']
         ]);
+
+        $data = $posted['lat'] .', '. $posted['lon'] . ', ' . $posted['dev'];
+        Postlog::create(['data'=>$data]);
+
         return response()->json([
             'status'=>200,
             'message'=>'location saved'
         ]);
+
     }
 
-    public function last10(){
-        $logs = positionlog::orderBy('id','DESC')->limit(10)->get();
+    public function last50(){
+        $logs = positionlog::orderBy('id','DESC')->limit(50)->get();
         return response()->json($logs);
     }
 
